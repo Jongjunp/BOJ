@@ -1,19 +1,16 @@
-use std::io::{self, BufRead};
-use std::collections::LinkedList;
+# 9019. DSLR
 
-fn main() {
-    let mut testnum_str = String::new();
-    io::stdin().read_line(&mut testnum_str).unwrap();
-    let num_test:u32 = testnum_str.trim().parse().unwrap();
-    for _i in 0..num_test {
-        let ab_vec: Vec<i32> = io::stdin().lock().lines().next().unwrap().unwrap()
-        .split(' ').map(|s| s.trim())     
-        .map(|s| s.parse().unwrap())     
-        .collect();
-        let mut ref_vec = [true;10000];
-        ref_vec[ab_vec[0] as usize] = false;
-        let dest:u32 = ab_vec[1] as u32;
-        let mut visit_nodes = LinkedList::from([(ab_vec[0] as u32, String::from(""))]);
+# 문제 정의
+> 이 문제는 BFS의 응용이다.
+> 레지스터와 레지스터 조작 명령으로 가려져 있지만 결국 처음 주어진 숫자를 노드라고 보면 하나의 노드에서 각각의 명령(D,S,L,R)에 따른 네 가지 다른 노드로 연결되는 간선이 존재하는 그래프가 그려지고 목표 숫자, 즉 목표 노드를 검색을 통해 찾는 문제로 환원된다.
+
+# 문제 풀이
+> BFS의 구현과 마찬가지로 문제를 풀어주면 된다. 
+> 이 때, 각각의 노드는 레지스터 명령에 따라 변환된 숫자와 처음 숫자에서 현재 숫자까지 도달하기 위해 행한 명령의 집합을 포함한 tuple 형태로 구성해주면 된다.
+> 또한 방문한 노드와 방문하지 않은 노드를 구분하기 위해 index가 0에서 9999까지의 array를 생성해 방문 여부를 표시한다.
+> list를 이용해서 구현해도 되지만 이 경우, 시간 복잡도가 O(n)이 되어 주어진 시간을 초과하게 된다.
+> BFS의 주요 구현은 다음과 같다.
+''' rust
         loop {
             let tuple = visit_nodes.pop_front().unwrap();
             let walker = tuple.0 as i32;
@@ -66,5 +63,9 @@ fn main() {
                 ref_vec[r_trans as usize] = false;
             }
         }
-    }
-}
+'''
+
+# 주의할 점
+> 이상하게도 같은 방식으로 구현해도 C++를 이용해서 구현했을 때 시간초과 오류가 나지 않는다. 
+> C++로 코딩하도록 하는 것이 가장 빠른 방법이다.
+

@@ -22,7 +22,7 @@ int main() {
     for (int i=0; i<logpair; i++) {
         long long a_i, b_i;
         scanf("%lld %lld", &a_i, &b_i);
-        if ((a_i < 0)&&(lower_bound < b_i)) {
+        if ((r_i_1 + a_i != b_i)&&(lower_bound < b_i)) {
             lower_bound = b_i;
         }
         long long obj_num;
@@ -53,24 +53,9 @@ int main() {
         }
         r_i_1 = b_i;
     }
-    long long answer = -1;
-    for (int j=1; j*j<=temp_answer; j++) {
-        if (temp_answer%j==0) {
-            if (j > lower_bound) {
-                answer = j;
-                break;
-            }
-            else if (temp_answer/j > lower_bound) {
-                answer = temp_answer/j;
-                continue;
-            }
-            else {
-                continue;
-            }
-        }
-        else {
-            continue;
-        }
+    long long answer = temp_answer;
+    if (answer <= lower_bound) {
+        answer = -1;
     }
     cout << answer << endl;
     return 0;

@@ -10,7 +10,8 @@
 > 또한 방문한 노드와 방문하지 않은 노드를 구분하기 위해 index가 0에서 9999까지의 array를 생성해 방문 여부를 표시한다.
 > list를 이용해서 구현해도 되지만 이 경우, 시간 복잡도가 O(n)이 되어 주어진 시간을 초과하게 된다.
 > BFS의 주요 구현은 다음과 같다.
-''' rust
+
+```
         loop {
             let tuple = visit_nodes.pop_front().unwrap();
             let walker = tuple.0 as i32;
@@ -63,7 +64,7 @@
                 ref_vec[r_trans as usize] = false;
             }
         }
-'''
+```
 
 # 주의할 점
 > 시간 초과를 막기 위해서 0~9999까지의 숫자에 대해 모두 D,S,L,R 연산을 수행한 뒤의 결과가 어떤지 matrix에 미리 저장해 놓아야 한다.

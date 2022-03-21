@@ -20,7 +20,7 @@
 
 > 마지막으로 연산 결과 자체가 잘못되었을 때는 반드시 결과값이 -1이 되어야 한다.
 > 아래는 GCD를 계산하는 코드이다. 
-''' cpp
+``` cpp
 long long gcd (long long a, long long b) {
     while (true) {
 		long long c = a % b;
@@ -29,7 +29,7 @@ long long gcd (long long a, long long b) {
 		b = c;
 	}
 }
-'''
+```
 
 # 주의할 점
 > DP를 위한 2D array를 만들 때, 입력으로 주어진 범위까지만을 table의 index로 설정해서는 안된다. 이 같은 경우, index의 끝부분인 corner case에서 에러가 일어날 수 있기 때문에 주어진 입력 값 범위 전부를 다룰 수 있는 array를 만들어야 한다.

@@ -16,7 +16,8 @@
 > 1. maxValue(N)(W) = v_N + maxValue(N-1)(W-(w_N))
 > 2. maxValue(N)(W) = maxValue(N-1)(W)
 > 따라서 이 두 가지 값 중 더 큰 값을 가지는 경우를 고르도록 프로그래밍 하면 된다.
-''' cpp
+
+``` cpp
 if ((i==0) || (j==0)) {
     solutionTable[i][j] = 0;
     }
@@ -24,7 +25,7 @@ if ((i==0) || (j==0)) {
         if (j >= objWeight[i]) solutionTable[i][j] = max(objValue[i]+solutionTable[i-1][j-objWeight[i]], solutionTable[i-1][j]);
         else solutionTable[i][j] = solutionTable[i-1][j];
     }
-'''
+```
 
 # 주의할 점
 > DP를 위한 2D array를 만들 때, 입력으로 주어진 범위까지만을 table의 index로 설정해서는 안된다. 이 같은 경우, index의 끝부분인 corner case에서 에러가 일어날 수 있기 때문에 주어진 입력 값 범위 전부를 다룰 수 있는 array를 만들어야 한다.

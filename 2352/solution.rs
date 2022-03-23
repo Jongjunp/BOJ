@@ -4,11 +4,9 @@ use std::io::{self, BufRead};
 //lis_vec[i] is the value of lis length which is ended with port_vec[i]
 fn lis_search(port_vec: Vec<u32>) -> u32 {
     let mut lis_vec = Vec::new();
-    let mut lis_len:u32 = 0;
     for port in port_vec {
         if (lis_vec.is_empty()) || (port > lis_vec[lis_vec.len()-1]) {
             lis_vec.push(port);
-            lis_len = lis_vec.len() as u32;
             continue;
         }
         let mut left = 0;
@@ -24,11 +22,9 @@ fn lis_search(port_vec: Vec<u32>) -> u32 {
             mid = (left+right) / 2;
         }
         lis_vec[mid] = port;
-        if lis_len < (right as u32) {
-            lis_len = right as u32;
-        }
     }
-    lis_len
+    let lis_len = lis_vec.len();
+    lis_len as u32
 }
 
 fn main() {

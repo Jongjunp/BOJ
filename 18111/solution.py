@@ -11,8 +11,7 @@ for _i in range(verticalSize):
         minHeight = min(heightInRow)
     heightMap.append(heightInRow)
 
-optCost = float("inf")
-optHeight = 0
+
 for height in range(minHeight, maxHeight+1):
     remainingBlocks = blocksInInventory
     cost = 0

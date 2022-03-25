@@ -14,44 +14,48 @@ class IcpcParser:
         self._OPERATOR = "OPERATOR"
 
         self._current_state = self._INIT
-        self._stack = 0
-        self._operand_num = 0
         self._total_operand_num = 0
+        self._operand_stack = []
         self._improper = False
 
     def _state_transition(self, charac):
         if self._current_state == self._INIT:
             if charac in open_parentheses:
-                self._stack += 1
-                self._operand_num = 0
+                self._operand_stack.append('(')
                 self._current_state = self._IN_PAREN
                 return 1
             elif charac in operand:
                 self._total_operand_num += 1
-                self._operand_num += 1
-                if self._operand_num > 2:
-                    self._improper = True
+                self._operand_stack.append('.')
                 self._current_state = self._OPERAND
                 return 1
             else:
                 return -1
         elif self._current_state == self._IN_PAREN:
             if charac in open_parentheses:
-                self._stack += 1
-                self._operand_num = 0
+                self._operand_stack.append('(')
                 return 1
             elif charac in operand:
                 self._total_operand_num += 1
-                self._operand_num += 1
-                if self._operand_num > 2:
-                    self._improper = True
+                self._operand_stack.append('.')
                 self._current_state = self._OPERAND
                 return 1
             else:
                 return -1
         elif self._current_state == self._OPERAND:
             if charac in close_parentheses:
-                self._stack -= 1
+                count = 0
+                popout = ''
+                while ((self._operand_stack) and (popout!='(')):
+                    popout = self._operand_stack.pop()
+                    count += 1
+                if ((not self._operand_stack) and (popout!='(')):
+                    return -1
+                elif (count!=3):
+                    self._improper = True
+                    self._operand_stack.append('.')
+                else:
+                    self._operand_stack.append('.')
                 self._current_state = self._OUT_PAREN
                 return 1
             elif charac in operator:
@@ -62,13 +66,11 @@ class IcpcParser:
         elif self._current_state == self._OPERATOR:
             if charac in operand:
                 self._total_operand_num += 1
-                self._operand_num += 1
-                if self._operand_num > 2:
-                    self._improper = True
+                self._operand_stack.append('.')
                 self._current_state = self._OPERAND
                 return 1
             elif charac in open_parentheses:
-                self._stack += 1
+                self._operand_stack.append('(')
                 self._current_state = self._IN_PAREN
                 return 1
             else:
@@ -78,7 +80,18 @@ class IcpcParser:
                 self._current_state = self._OPERATOR
                 return 1
             elif charac in close_parentheses:
-                self._stack -= 1
+                count = 0
+                popout = ''
+                while ((self._operand_stack) and (popout!='(')):
+                    popout = self._operand_stack.pop()
+                    count += 1
+                if ((not self._operand_stack) and (popout!='(')):
+                    return -1
+                elif (count!=3):
+                    self._improper = True
+                    self._operand_stack.append('.')
+                else:
+                    self._operand_stack.append('.')
                 return 1
             else:
                 return -1
@@ -93,14 +106,14 @@ class IcpcParser:
                 return "error"
             else:
                 continue
-        if (not (self._stack == 0)) or (self._current_state==self._OPERATOR):
+        if ('(' in self._operand_stack) or (self._current_state==self._OPERATOR):
             return "error"
         elif (self._total_operand_num == 1):
-            if self._operand_num == 1:
-                return "proper"
-            else:
+            if self._improper:
                 return "improper"
-        elif (not (self._operand_num == 2)) or self._improper:
+            else:
+                return "proper"
+        elif (not (self._operand_stack==['.','.'])) or self._improper:
             return "improper"
         else:
             return "proper"

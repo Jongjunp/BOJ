@@ -2,28 +2,36 @@
 #include <queue>
 #include <utility>
 using namespace std;
+const int INF = 1000000;
 
 int maxItemNum(int field_arr[][101], int items_arr[], int start_region, int num_region, int search_range) {
     queue< pair<int,int> > region_queue;
-    bool visited_list[101] = {false};
-    int max_items = 0;
-    max_items += items_arr[start_region];
-    visited_list[start_region] = true; 
+    int path_len_list[101];
+    for (int r=0; r<101; r++) {
+        path_len_list[r] = INF;
+    }
+
+    path_len_list[start_region] = 0;
     region_queue.push(pair<int,int>(start_region,0));
     while (!region_queue.empty()) {
         pair<int,int> region = region_queue.front();
-        region_queue.pop();
-        for (int m=1; m<=num_region; m++) {
+        for (int m=1; m <= num_region; m++) {
             if ((field_arr[region.first][m]!=0)
-                 && (!visited_list[m]) 
-                 && (region.second+field_arr[region.first][m]<=search_range)) {
-                visited_list[m] = true;
-                max_items += items_arr[m];
+                 && (path_len_list[m] > (region.second+field_arr[region.first][m]))) {
+                path_len_list[m] = region.second+field_arr[region.first][m];
                 region_queue.push(pair<int,int>(m,region.second+field_arr[region.first][m]));
             }
         }
+        region_queue.pop();
     }
-    return max_items;
+
+    int max_item_value = 0;
+    for (int l=1; l<=num_region; l++) {
+        if (path_len_list[l] <= search_range) {
+            max_item_value += items_arr[l];
+        }
+    }
+    return max_item_value;
 }
 
 int main() {

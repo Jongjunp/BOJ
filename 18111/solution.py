@@ -1,33 +1,47 @@
 verticalSize, horizontalSize, blocksInInventory = list(map(int, input().split(' ')))
 heightMap = []
-maxHeight = 0
-minHeight = 256
 
 for _i in range(verticalSize):
-    heightInRow = list(map(int, input().split(' ')))
-    if (maxHeight < max(heightInRow)):
-        maxHeight = max(heightInRow)
-    if (minHeight > min(heightInRow)):
-        minHeight = min(heightInRow)
-    heightMap.append(heightInRow)
+    heightMap = heightMap + list(map(int, input().split(' ')))
 
+maxHeight = max(heightMap)
+minHeight = min(heightMap)
 
-for height in range(minHeight, maxHeight+1):
+optHeight = 0
+
+def optCheck(height):
     remainingBlocks = blocksInInventory
-    cost = 0
-    for row in heightMap:
-        for block in row:
-            if (block-height <= 0):
-                cost = cost + abs(block-height)
-                remainingBlocks = remainingBlocks - abs(block-height)
-            else:
-                cost = cost + (2*abs(block-height))
-                remainingBlocks = remainingBlocks + abs(block-height)
-    if (remainingBlocks < 0):
-        continue
+    costChange = 0
+    for block in heightMap:
+        if (block-height < 0):
+            costChange = costChange + 1
+            remainingBlocks = remainingBlocks - abs(block-height)
+        else:
+            costChange = costChange - 2
+            remainingBlocks = remainingBlocks + abs(block-height)
+    return ((remainingBlocks >= 0) and (costChange <= 0))
+
+heightList = range(minHeight, maxHeight+1)
+left = 0
+right = len(heightList)-1
+mid = int((left+right)/2)
+while (right>left+1):
+    checked = optCheck(heightList[mid])
+    if checked:
+        left = mid
     else:
-        if (cost < optCost):
-            optCost = cost
-            optHeight = height
+        right = mid
+    mid = int((left+right)/2)
+if optCheck(heightList[right]):
+    optHeight = heightList[right]
+else:
+    optHeight = heightList[left]
+
+optCost = 0
+for block in heightMap:
+    if (block-optHeight <= 0):
+        optCost = optCost + abs(block-optHeight)
+    else:
+        optCost = optCost + (2*abs(block-optHeight))
 
 print(str(optCost)+" "+str(optHeight))

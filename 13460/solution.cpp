@@ -1,5 +1,5 @@
 #include <iostream>
-#include <string>
+#include <cstring>
 #include <utility>
 #include <queue>
 using namespace std;
@@ -287,59 +287,82 @@ int main() {
         pair< pair<int,int>,pair<int,int> > down_state = Down(board, red_h, red_w, blue_h, blue_w);
         pair< pair<int,int>,pair<int,int> > up_state = Up(board, red_h, red_w, blue_h, blue_w);
         //left action
-        if ((left_state.first.first==goal.first) && (left_state.first.second==goal.second)) {
-            if (!((left_state.second.first==goal.first) && (left_state.second.second==goal.second))
-                && (current_action_num+1 < min_action_num)) {
-                min_action_num = current_action_num+1;
+        if (!((left_state.first.first==red_h)
+            && (left_state.first.second==red_w)
+            && (left_state.second.first==blue_h)
+            && (left_state.second.second==blue_w))){
+            if ((left_state.first.first==goal.first) && (left_state.first.second==goal.second)) {
+                if (!((left_state.second.first==goal.first) && (left_state.second.second==goal.second))
+                    && (current_action_num+1 < min_action_num)) {
+                    min_action_num = current_action_num+1;
+                    break;
+                }
             }
-        }
-        else {
-            if (!((left_state.second.first==goal.first) && (left_state.second.second==goal.second))) {
-                pair < pair< pair<int,int>,pair<int,int> >,int > new_state = make_pair(left_state,current_action_num+1);
-                state_queue.push(new_state);
+            else {
+                if (!((left_state.second.first==goal.first) && (left_state.second.second==goal.second))) {
+                    pair < pair< pair<int,int>,pair<int,int> >,int > new_state = make_pair(left_state,current_action_num+1);
+                    state_queue.push(new_state);
+                }
             }
         }
         //right action
-        if ((right_state.first.first==goal.first) && (right_state.first.second==goal.second)) {
-            if (!((right_state.second.first==goal.first) && (right_state.second.second==goal.second))
-                && (current_action_num+1 < min_action_num)) {
-                min_action_num = current_action_num+1;
+        if (!((right_state.first.first==red_h)
+            && (right_state.first.second==red_w)
+            && (right_state.second.first==blue_h)
+            && (right_state.second.second==blue_w))){
+            if ((right_state.first.first==goal.first) && (right_state.first.second==goal.second)) {
+                if (!((right_state.second.first==goal.first) && (right_state.second.second==goal.second))
+                    && (current_action_num+1 < min_action_num)) {
+                    min_action_num = current_action_num+1;
+                    break;
+                }
             }
-        }
-        else {
-            if (!((right_state.second.first==goal.first) && (right_state.second.second==goal.second))) {
-                pair < pair< pair<int,int>,pair<int,int> >,int > new_state = make_pair(right_state,current_action_num+1);
-                state_queue.push(new_state);
+            else {
+                if (!((right_state.second.first==goal.first) && (right_state.second.second==goal.second))) {
+                    pair < pair< pair<int,int>,pair<int,int> >,int > new_state = make_pair(right_state,current_action_num+1);
+                    state_queue.push(new_state);
+                }
             }
         }
         //down action
-        if ((down_state.first.first==goal.first) && (down_state.first.second==goal.second)) {
-            if (!((down_state.second.first==goal.first) && (down_state.second.second==goal.second))
-                && (current_action_num+1 < min_action_num)) {
-                min_action_num = current_action_num+1;
+        if (!((down_state.first.first==red_h)
+            && (down_state.first.second==red_w)
+            && (down_state.second.first==blue_h)
+            && (down_state.second.second==blue_w))){
+            if ((down_state.first.first==goal.first) && (down_state.first.second==goal.second)) {
+                if (!((down_state.second.first==goal.first) && (down_state.second.second==goal.second))
+                    && (current_action_num+1 < min_action_num)) {
+                    min_action_num = current_action_num+1;
+                    break;
+                }
             }
-        }
-        else {
-            if (!((down_state.second.first==goal.first) && (down_state.second.second==goal.second))) {
-                pair < pair< pair<int,int>,pair<int,int> >,int > new_state = make_pair(down_state,current_action_num+1);
-                state_queue.push(new_state);
+            else {
+                if (!((down_state.second.first==goal.first) && (down_state.second.second==goal.second))) {
+                    pair < pair< pair<int,int>,pair<int,int> >,int > new_state = make_pair(down_state,current_action_num+1);
+                    state_queue.push(new_state);
+                }
             }
         }
         //up action
-        if ((up_state.first.first==goal.first) && (up_state.first.second==goal.second)) {
-            if (!((up_state.second.first==goal.first) && (up_state.second.second==goal.second))
-                && (current_action_num+1 < min_action_num)) {
-                min_action_num = current_action_num+1;
+        if (!((up_state.first.first==red_h)
+            && (up_state.first.second==red_w)
+            && (up_state.second.first==blue_h)
+            && (up_state.second.second==blue_w))){
+            if ((up_state.first.first==goal.first) && (up_state.first.second==goal.second)) {
+                if (!((up_state.second.first==goal.first) && (up_state.second.second==goal.second))
+                    && (current_action_num+1 < min_action_num)) {
+                    min_action_num = current_action_num+1;
+                    break;
+                }
             }
-        }
-        else {
-            if (!((up_state.second.first==goal.first) && (up_state.second.second==goal.second))) {
-                pair < pair< pair<int,int>,pair<int,int> >,int > new_state = make_pair(up_state,current_action_num+1);
-                state_queue.push(new_state);
+            else {
+                if (!((up_state.second.first==goal.first) && (up_state.second.second==goal.second))) {
+                    pair < pair< pair<int,int>,pair<int,int> >,int > new_state = make_pair(up_state,current_action_num+1);
+                    state_queue.push(new_state);
+                }
             }
         }
     }
-
     if (min_action_num > 10) {
         cout << -1 << endl;
     }

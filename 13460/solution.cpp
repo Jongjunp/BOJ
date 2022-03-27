@@ -121,7 +121,7 @@ pair< pair<int,int>,pair<int,int> > Right(char arr[][10], int red_h, int red_w, 
 pair< pair<int,int>,pair<int,int> > Up(char arr[][10], int red_h, int red_w, int blue_h, int blue_w) {
     int red_result = red_h;
     int blue_result = blue_h;
-    if (red_h == blue_h) {
+    if (red_w == blue_w) {
         if (red_h < blue_h) {
             while (arr[red_result-1][red_w]==blank) {
                 red_result -= 1;
@@ -174,7 +174,7 @@ pair< pair<int,int>,pair<int,int> > Up(char arr[][10], int red_h, int red_w, int
 pair< pair<int,int>,pair<int,int> > Down(char arr[][10], int red_h, int red_w, int blue_h, int blue_w) {
     int red_result = red_h;
     int blue_result = blue_h;
-    if (red_h == blue_h) {
+    if (red_w == blue_w) {
         if (red_h > blue_h) {
             while (arr[red_result+1][red_w]==blank) {
                 red_result += 1;

@@ -10,6 +10,6 @@ int main() {
     for (int i=0; i<num_ranges; i++) {
         long start, end;
         cin >> start >> end;
-
+        
     }
 }

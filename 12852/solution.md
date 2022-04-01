@@ -7,7 +7,7 @@
 # 문제 풀이
 > 큐 자료구조와 2차원 배열을 이용해 BFS를 구현하면 된다.
 > 핵심적인 BFS 구현은 다음과 같다.
-''' cpp
+``` cpp
     while (walker!=1) {
         int div3 = res_mat[walker][0];
         int div2 = res_mat[walker][1];
@@ -27,7 +27,7 @@
         q.pop();
         walker = q.front().first;
     }
-'''
+```
 
 # 주의할 점
 > BFS를 위한 2D array를 만들 때, 입력으로 주어진 범위까지만을 table의 index로 설정해서는 안된다. 이 같은 경우, index의 끝부분인 corner case에서 에러가 일어날 수 있기 때문에 주어진 입력 값 범위 전부를 다룰 수 있는 array를 만들어야 한다.

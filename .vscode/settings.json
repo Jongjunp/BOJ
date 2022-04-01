@@ -6,6 +6,10 @@
         "queue": "cpp",
         "string": "cpp",
         "utility": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "list": "cpp",
+        "memory": "cpp",
+        "tuple": "cpp",
+        "type_traits": "cpp"
     }
 }

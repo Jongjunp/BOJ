@@ -12,7 +12,7 @@
 > LIS problem을 풀 때, 어떤 원소를 최댓값으로 하는 LIS의 길이를 구하였다. 바이토닉 수열의 경우, 수열의 첫 번째 원소부터 진행해서 구한 LIS의 길이와 수열의 마지막 원소부터 진행해서 구한 LIS의 길이를 합한 것에서 중복되는 원소 하나를 빼서 구할 수 있다.
 > 따라서 LIS를 구하는 과정을 두 번 진행한 뒤, 나온 수열의 elementwise sum을 구하고 결과 수열의 최댓값을 선택하면 된다.
 
-```
+``` rust
 given_list.reverse();
     for ele in given_list.iter() {
         if lds_list.is_empty() || ele > lds_list[lds_list.len()-1] {

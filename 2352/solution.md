@@ -13,7 +13,7 @@
 > 이 리스트는 각 원소를 마지막 원소로 하는 최대 길이의 증가 수열을 찾기 위해 사용된다.
 > 이분 탐색을 통해 배열의 원소를 리스트에 넣음으로써 리스트의 원소들은 증가하는 순으로 정렬된다.
 
-```
+```rust
     let mut left = 0;
     let mut right = lis_vec.len()-1;
     let mut mid = (left+right) / 2;

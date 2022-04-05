@@ -7,7 +7,7 @@ void init() {
 int main() {
     init();
     int N,M;
-    int seq[10000] = {0};
+    int seq[200000] = {0};
     cin >> N >> M;
     for (int i=0; i<N; i++) {
         cin >> seq[i];

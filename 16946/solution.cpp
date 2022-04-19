@@ -1,14 +1,15 @@
 #include <iostream>
 #include <queue>
 #include <utility>
+#include <set>
 using namespace std;
 const char wall = '1';
 const char space = '0';
 int main() {
     int N,M;
-    char field[1000][1000] = {'0'};
+    char field[1000][1000];
     int temp_answer[1000][1000] = {0};
-    short temp_group[500000] = {0};
+    short temp_group[500002] = {0};
     bool visited[1000][1000] = {false};
     bool filled[1000][1000] = {false};
     cin >> N >> M;
@@ -119,36 +120,25 @@ int main() {
         for (int j=0; j<M; j++) {
             if (field[i][j]==wall) {
                 int answer = 1;
-                short group_list[4] = {0};
-                short final_list[4] = {0};
+                set<int> temp_set;
                 if (i>0) {
-                    group_list[0] = temp_answer[i-1][j];
+                    temp_set.insert(temp_answer[i-1][j]);
                 }
                 if (i<N-1) {
-                    group_list[1] = temp_answer[i+1][j];
+                    temp_set.insert(temp_answer[i+1][j]);
                 }
                 if (j>0) {
-                    group_list[2] = temp_answer[i][j-1];
+                    temp_set.insert(temp_answer[i][j-1]);
                 }
                 if (j<M-1) {
-                    group_list[3] = temp_answer[i][j+1];
+                    temp_set.insert(temp_answer[i][j+1]);
                 }
-                for (int k=0; k<4; k++) {
-                    bool repeated = false;
-                    for (int l=k+1; l<4; l++) {
-                        if (group_list[k]==group_list[l]){
-                            repeated = true;
-                        }
-                    }
-                    if (!repeated) {
-                        final_list[k] = group_list[k];
-                    }
-                }
-                for (int m=0; m<4; m++) {
-                    answer += temp_group[final_list[m]];
+                set<int>::iterator iter;
+                for (iter=temp_set.begin(); iter!=temp_set.end(); iter++) {
+                    answer += temp_group[*iter];
                     answer = answer%10;
                 }
-                cout << answer%10;
+                cout << answer;
             }
             else {
                 cout << 0;

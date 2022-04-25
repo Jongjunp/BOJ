@@ -1,43 +1,63 @@
 #include <iostream>
-#include <string>
 #include <queue>
-#define pairs pair<int,int>
+#include <vector>
 using namespace std;
-
-const INF = 1000;
-int main() {
-    int N, M, X;
-    scanf("%d %d %d", &N, &M, &X);
-    int dist[N][N] = {MAX};
-    //Create graph
-    for (int i=0; i<M; i++) {
-        int src, dest, time;
-        scanf("%d %d %d", &src, &dest, &time);
-        dist[src-1][dest-1] = time;
-    }
-    //1. Time to go - A* algorithm
-    int minPathToGo[N] = {MAX};
-    for (int k=0; k<N; k++) {
-        int tempPathToGo[N] = {MAX};
-        for (int m=0; m<N; m++) {
-
+const int INF = 987654321;
+int V,E,X;
+int max_time = 0;
+int graph[1001][1001] = {0};
+int path[1001] = {0};
+int post_time[1001] = {0};
+void dijkstra(int start, int goal) {
+    path[start] = 0;
+    for (int i=1; i<=V; i++) {
+        if (i!=start) {
+            path[i] = INF;
         }
-
     }
-    
-
-
-
-
-
-    //2. Time to comeback - Dijkstra
-    bool visited[N] = {false};
-    bool stall = true;
-    for (int j=0; j<N; j++) stall = stall && visited[j];
-    queue<int> q;
-    while !stall {
-
+    priority_queue< pair<int,int> > pq;
+    pair<int,int> init = make_pair(-path[start],start);
+    pq.push(init);
+    while (!pq.empty()) {
+        int cost = -pq.top().first;
+        int node = pq.top().second;
+        pq.pop();
+        if (path[node]<cost) {
+            continue;
+        }
+        if (node==goal) {
+            break;
+        }
+        for (int i=1; i<=V; i++) {
+            if (path[i]>cost+graph[node][i] && i!=node && graph[node][i]!=0) {
+                path[i] = cost+graph[node][i];
+                pq.push(make_pair(-path[i],i));
+            }
+        }
     }
+    return;
+}
 
-
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    cin >> V >> E >> X;
+    for (int i=0; i<E; i++) {
+        int v1,v2,w;
+        cin >> v1 >> v2 >> w;
+        graph[v1][v2] = w;
+    }
+    dijkstra(X,-1);
+    for (int i=1; i<=V; i++) {
+        post_time[i] = path[i];
+    }
+    for (int k=1; k<=V; k++) {
+        dijkstra(k,X);
+        int cost = path[X]+post_time[k];
+        if (max_time<cost) {
+            max_time = cost;
+        }
+    }
+    cout << max_time << endl;
 }

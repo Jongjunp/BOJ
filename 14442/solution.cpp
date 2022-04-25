@@ -19,7 +19,7 @@ int main() {
 
     //BFS
     queue< pair< pair<int,int>, pair<int,bool> > > state_queue;
-    bool visited[1000][1000][5] = {false};
+    bool visited[1000][1000][10] = {false};
     visited[0][0][0] = true; 
     pair< pair<int,int>, pair<int,int> >init_state = make_pair(make_pair(0,0),make_pair(1,0));
     int min_action_num = -1;

@@ -14,6 +14,7 @@
         "vector": "cpp",
         "ios": "cpp",
         "algorithm": "cpp",
-        "unordered_map": "cpp"
+        "unordered_map": "cpp",
+        "iosfwd": "cpp"
     }
 }

@@ -5,6 +5,6 @@ int main() {
     cin >> T;
     for (int i=0; i<T; i++) {
         cin >> N >> M;
-        
+        a
     }
 }

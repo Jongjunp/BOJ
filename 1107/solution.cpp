@@ -13,8 +13,5 @@ int main() {
         cin >> malfunct_button;
         buttons[malfunct_button] = false;
     }
-    for (int j=0; j<=targ_channel; j++) {
-        
-    }
-
+    
 }

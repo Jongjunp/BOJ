@@ -26,7 +26,7 @@ void propagateTree(int index, int start, int end) {
 	}
 }
 
-void updateTree(int index, int start, int end, int val, int left, int right) {
+void updateAdditionTree(int index, int start, int end, int val, int left, int right) {
 	propagateTree(index, start, end);
 	if (right < start || end < left) return;
 	if (left <= start && end <= right) {
@@ -35,17 +35,19 @@ void updateTree(int index, int start, int end, int val, int left, int right) {
 		return;
 	}
 	int mid = (start + end) / 2;
-	updateTree(index * 2, start, mid, val, left, right);
-	updateTree(index * 2 + 1, mid + 1, end, val, left, right);
+	updateAdditionTree(index * 2, start, mid, val, left, right);
+	updateAddtionTree(index * 2 + 1, mid + 1, end, val, left, right);
 	tree[index] = tree[index * 2] + tree[index * 2 + 1];
 }
-
-long long queryTree(int index, int start, int end, int targ) {
+void updateSqrtTree() {
+    
+}
+long long queryTree(int index, int start, int end, int left, int right) {
 	propagateTree(index, start, end);
-    if (start==end) return tree[index];
+    if (right<start || end<left) return 0;
+    if (left<=start && end<=right) return tree[index];
     int mid = (start+end)/2;
-    if (targ<=mid) return queryTree(2*index,start,mid,targ);
-    else return queryTree(2*index+1,mid+1,end,targ);
+    return queryTree(2*index,start,mid,left,right)+queryTree(2*index+1,mid+1,end,left,right);
 }
 
 int main()
@@ -59,16 +61,19 @@ int main()
 	initializeTree(1, 1, N);
 	int M;
 	cin >> M;
-	int op, a, b, c, x;
+	int op, L, R, X;
 	for (int i = 0; i < M; i++) {
 		cin >> op;
 		if (op == 1) {
-			cin >> a >> b >> c;
-			updateTree(1, 1, N, c, a, b);
+			cin >> L >> R >> X;
+			updateAdditionTree(1, 1, N, X, L, R);
 		}
+        else if (op == 2) {
+
+        }
 		else {
 			cin >> x;
-			cout << queryTree(1, 1, N, x) << "\n";
+			cout << queryTree(1, 1, N, L, R) << "\n";
 		}
 	}
 	return 0;

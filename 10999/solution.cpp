@@ -31,16 +31,14 @@ void updateTree(int index, int start, int end, long long val, int left, int righ
 	propagateTree(index, start, end);
 	if (right < start || end < left) return;
 	if (left <= start && end <= right) {
-        if (start==end) {
-            return;
-        }
 		lazy[index] += val;
-		propagateTree(index, start, end);
+        propagateTree(index, start, end);
+        return;
 	}
 	int mid = (start + end) / 2;
 	updateTree(index * 2, start, mid, val, left, right);
 	updateTree(index * 2 + 1, mid + 1, end, val, left, right);
-	tree[index] = tree[index * 2] + tree[index * 2 + 1];
+    tree[index] = tree[index*2] + tree[index*2+1];
     return;
 }
 
@@ -76,14 +74,6 @@ int main()
 			cin >> a >> b;
 			cout << queryTree(1, 1, N, a, b) << "\n";
 		}
-        for (int j=1; j<N*4+1; j++) {
-            cout << tree[j] << " ";
-        }
-        cout << "\n";
-         for (int j=1; j<N*4+1; j++) {
-            cout << lazy[j] << " ";
-        }
-        cout << "\n";
 	}
 	return 0;
 }

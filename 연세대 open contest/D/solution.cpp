@@ -36,7 +36,7 @@ int main() {
                 for (int a=-K; a<=K; a++) {
                     for (int b=abs(a)-K; b<=K-abs(a); b++) {
                         if (m+a<M && m+a>=0 && n+b<N && n+b>=0) {
-                            if (dept_store[n+b][m+a]!=mannequin) {
+                            if (dept_store[n+b][m+a]!=mannequin && dept_store[n+b][m+a]!=bench) {
                                 dept_store[n+b][m+a] = forbidden;
                             }
                         }

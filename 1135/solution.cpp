@@ -1,46 +1,47 @@
 #include <iostream>
-#include <algorithm>
 #include <vector>
-#include <queue>
+#include <algorithm>
 using namespace std;
-const int MAX = 50;
-vector<int> tree[MAX];
-queue<int> q;
+const int MAX = 51;
 int dp[MAX] = {0};
+vector<int> tree[MAX];
+bool visited[MAX] = {false};
 
-bool compare(int a, int b) {
-    return tree[a].size() > tree[b].size();
+void dfs(int node) {
+    visited[node] = true;
+    dp[node] = 0;
+    vector<int>::iterator iter;
+    vector<int> find_order;
+    int cnt = 1;
+    for(iter=tree[node].begin(); iter!=tree[node].end(); iter++) {
+        if (visited[*iter]) continue;
+        dfs(*iter);
+        find_order.push_back(dp[*iter]);
+    }
+    if (find_order.empty()) {
+        return;
+    }
+    sort(find_order.begin(),find_order.end(),greater<int>());
+    for (iter=find_order.begin(); iter!=find_order.end(); iter++) {
+        if (*iter+cnt>dp[node]) {
+            dp[node] = *iter+cnt;
+        }
+        cnt++;
+    }
 }
 
 int main() {
-    int n,v;
-    scanf("%d", &n);
-    for (int i=0; i<n; i++) {
-        scanf("%d",&v);
-        if (v==-1) {
+    ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+    int N,u;
+    cin >> N;
+    for (int i=0; i<N; i++) {
+        cin >> u;
+        if (u==-1) {
             continue;
         }
-        tree[v].push_back(i);
+        tree[i].push_back(u);
+        tree[u].push_back(i);
     }
-    q.push(0);
-    int min_time = 0;
-    while (!q.empty()) {
-        int node = q.front();
-        q.pop();
-        vector<int>::iterator iter;
-        int cnt = 1;
-        sort(tree[node].begin(),tree[node].end(), compare);
-        for (iter=tree[node].begin(); iter!=tree[node].end(); iter++) {
-            if (*iter<node) continue;
-            q.push(*iter);
-            dp[*iter] = dp[node]+cnt;
-            cnt += 1;
-        }
-    }
-    for (int i=0; i<n; i++) {
-        if (tree[i].empty() && dp[i]>min_time) {
-            min_time = dp[i];
-        }
-    }
-    printf("%d\n",min_time);
+    dfs(0);
+    cout << dp[0] << endl;
 }

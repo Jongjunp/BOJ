@@ -12,13 +12,9 @@ int find_op(int x) {
 }
 
 void union_op(int x, int y, int w) {
-    if (diff[y]==0) {
-        diff[y] = w;
-        parent[y] = x;
-    }
-    else {
-        
-    }
+    int parent_x = find_op(x);
+    int parent_y = find_op(y);
+    diff[x]
 }
 
 int main() {

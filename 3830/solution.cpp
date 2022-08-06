@@ -14,7 +14,10 @@ int find_op(int x) {
 void union_op(int x, int y, int w) {
     int parent_x = find_op(x);
     int parent_y = find_op(y);
-    diff[x]
+    if (parent_x==parent_y) return;
+    diff[parent_y] = diff[x]+w-diff[y];
+    parent[parent_y] = parent_x;
+    return;
 }
 
 int main() {
@@ -47,10 +50,6 @@ int main() {
                     cout << "UNKNOWN\n";
                 }
             }
-            for (int k=1; k<=N; k++) {
-                cout << diff[k] << " ";
-            }
-            cout << endl;
         }
     }
 }
